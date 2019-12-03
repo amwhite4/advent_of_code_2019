@@ -1,0 +1,26 @@
+# part 1 import module masses into list calc fuel req for each, sum fuel req
+# part 2 calc fuel for fuel until fuel req <= 0
+
+# import list of module mases and convert to a list to work with 
+module_mases =[]
+data = open('module_mases.txt','r')
+for line in data:
+    module_mases.append(line.strip())
+# calculate total fuel for modules and for added fuel sum together for result
+total_fuel = 0
+for i in module_mases:
+    added_fuel = (int(i)//3)-2
+    total_fuel += added_fuel
+    fuel_for_fuel = (added_fuel //3)-2
+    total_fuel += fuel_for_fuel
+    while fuel_for_fuel > 0:
+        fuel_for_fuel = (fuel_for_fuel//3)-2
+        if fuel_for_fuel <= 0:
+            fuel_for_fuel = 0
+        total_fuel += fuel_for_fuel
+
+#print result
+print(total_fuel)
+
+
+
