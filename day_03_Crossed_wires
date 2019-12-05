@@ -1,3 +1,4 @@
+
 #wire_1= ['R2','U7','D3','R8']
 
 #wire_2 =['R6','U7','L4','D4']
@@ -5,22 +6,26 @@
 def get_path(wire):
     x = 0
     y = 0
-    coordinates =[[x,y,None]]
+    coordinates =[[x,y]]
     for i in wire:
         direction = i[0]
         length = int(i[1:])
         if direction == 'R':
-            x += int(length)
-            coordinates.append((x,y,'H',length))
+            for q in range(length):
+                x += 1
+                coordinates.append([x,y])
         if direction == 'L':
-            x -= int(length)
-            coordinates.append((x,y,'H',length))
+            for q in range(length):
+                x -= 1
+                coordinates.append([x,y])
         if direction == 'U':
-            y += int(length)
-            coordinates.append((x,y,'V',length))
+            for q in range(length):
+                y += 1
+                coordinates.append([x,y])
         if direction =='D':
-            y -= int(length)
-            coordinates.append((x,y,'V',length))
+            for q in range(length):
+                y -= 1
+                coordinates.append([x,y])
     return(coordinates)
 
 #wire_1_path = get_path(wire_1)
@@ -30,35 +35,41 @@ def get_path(wire):
 
 def get_intersect(wire_path,other_wire_path):
     intersections =[]
-    hline_plot =set()
-    vline_plot =set()
     for coordinate in wire_path:
-        if coordinate[2] == 'H':
-            x1 =0
-            x2 = x1 + coordinate[3]
-            hline_plot =set(i for i in set(range(x1, x2)))
-            #print(hline_plot)
         for other_coordinate in other_wire_path:
-            if other_coordinate[2] =='V':
-                y1 = 0
-                y2 = y1 + other_coordinate[3]
-                vline_plot = set(1 for i in set(range(y1,y2)))
-                #print(vline_plot)
-            if hline_plot.intersection(vline_plot):
-                intersections.append([coordinate[0],other_coordinate[1]])
-    #print(intersections)
+            if coordinate == other_coordinate:
+                intersections.append(coordinate)
     return intersections
+#print(get_intersect(wire_1_path,wire_2_path))
+
+"""if coordinate[2] == 'H':
+    x1 =0
+    x2 = x1 + coordinate[3]
+    hline_plot =set(i for i in set(range(x1, x2)))
+    x1 = x2
+    #print(hline_plot)
+for other_coordinate in other_wire_path:
+    if other_coordinate[2] =='V':
+        y1 = 0
+        y2 = y1 + other_coordinate[3]
+        vline_plot = set(1 for i in set(range(y1,y2)))
+        y1 = y2
+        #print(vline_plot)
+    if hline_plot.intersection(vline_plot):
+        intersections.append([coordinate[0],other_coordinate[1]])
+#print(intersections)
+return intersections"""
 
 def get_min_distance(intersections= []):
     distances = []
     for coordinates in intersections[1:]:
-        distance = abs(coordinates[0]) +abs(coordinates[1])
+        distance = abs(coordinates[0]) + abs(coordinates[1])
         distances.append(distance)
     return min(distances)
 
 # calculate closest interections point
 
-
+#print(get_min_distance(get_intersect(wire_1_path,wire_2_path)))
 data =open('scratch.txt','r')
 lines =data.readlines()
 wire_1 = lines[0].split(',')
@@ -69,5 +80,5 @@ wire_1_path = get_path(wire_1)
 #print(wire_1_path)
 wire_2_path = get_path(wire_2)
 #print(wire_2_path)
-print(get_intersect(wire_1_path,wire_2_path))
+#print(get_intersect(wire_1_path,wire_2_path))
 print(get_min_distance(get_intersect(wire_1_path,wire_2_path)))
