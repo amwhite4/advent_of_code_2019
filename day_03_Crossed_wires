@@ -1,35 +1,35 @@
 
-wire_1= ['R2','U7','D3','R8']
+#wire_1= ['R2','U7','D3','R8']
 
-wire_2 =['R6','U7','L4','D4']
+#wire_2 =['R6','U7','L4','D4']
 
 def get_path(wire):
     x = 0
     y = 0
-    coordinates =[(x,y)]
+    coordinates =[[x,y]]
     for i in wire:
         direction = i[0]
         length = int(i[1:])
         if direction == 'R':
             for q in range(length):
                 x += 1
-                coordinates.append((x,y))
+                coordinates.append([x,y])
         if direction == 'L':
             for q in range(length):
                 x -= 1
-                coordinates.append((x,y))
+                coordinates.append([x,y])
         if direction == 'U':
             for q in range(length):
                 y += 1
-                coordinates.append((x,y))
+                coordinates.append([x,y])
         if direction =='D':
             for q in range(length):
                 y -= 1
-                coordinates.append((x,y))
+                coordinates.append([x,y])
     return(coordinates)
 
-wire_1_path = get_path(wire_1)
-wire_2_path = get_path(wire_2)
+#wire_1_path = get_path(wire_1)
+#wire_2_path = get_path(wire_2)
 #print(wire_1_path)
 #print(wire_2_path)
 
@@ -40,7 +40,7 @@ def get_intersect(wire_path,other_wire_path):
             if coordinate == other_coordinate:
                 intersections.append(coordinate)
     return intersections
-print(get_intersect(wire_1_path,wire_2_path))
+#print(get_intersect(wire_1_path,wire_2_path))
 
 """if coordinate[2] == 'H':
     x1 =0
@@ -69,7 +69,7 @@ def get_min_distance(intersections= []):
 
 # calculate closest interections point
 
-print(get_min_distance(get_intersect(wire_1_path,wire_2_path)))
+#print(get_min_distance(get_intersect(wire_1_path,wire_2_path)))
 data =open('scratch.txt','r')
 lines =data.readlines()
 wire_1 = lines[0].split(',')
@@ -81,5 +81,4 @@ wire_1_path = get_path(wire_1)
 wire_2_path = get_path(wire_2)
 #print(wire_2_path)
 #print(get_intersect(wire_1_path,wire_2_path))
-#print(get_min_distance(get_intersect(wire_1_path,wire_2_path)))
-
+print(get_min_distance(get_intersect(wire_1_path,wire_2_path)))
