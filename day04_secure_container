@@ -1,0 +1,79 @@
+"""--- Day 4: Secure Container ---
+You arrive at the Venus fuel depot only to discover it's protected by a password. The Elves had written the password on a sticky note, but someone threw it out.
+
+However, they do remember a few key facts about the password:
+
+It is a six-digit number.
+The value is within the range given in your puzzle input.
+Two adjacent digits are the same (like 22 in 122345).
+Going from left to right, the digits never decrease; they only ever increase or stay the same (like 111123 or 135679).
+Other than the range rule, the following are true:
+
+111111 meets these criteria (double 11, never decreases).
+223450 does not meet these criteria (decreasing pair of digits 50).
+123789 does not meet these criteria (no double).
+How many different passwords within the range given in your puzzle input meet these criteria?"""
+
+# Low and high end for range of possible passwords
+low = 168630
+high = 718098
+# get all possible numbers in range
+puzzle_input =range(low,high)
+"""test puzzl_input"""
+#print(puzzle_input)
+#print(type(puzzle_input[0]))
+#print(puzzle_input[0])
+
+# check to make sure the potential password is ascending
+def is_ascending(check_password):
+    for i in range(1,len(check_password)):
+        if check_password[i] < check_password[i-1]:
+            return False
+
+    return True
+# check to make sure potential password has a double ( For Part 2 I started range at 2 and added the and statement) 
+# returns too low of a count why? )a
+def has_double(check_password):
+    for i in range(2,len(check_password)):
+        if check_password[i] == check_password[i -1] and check_password[i] != check_password[i-2]:
+            return True
+        else:
+            return False
+
+
+
+"""test is_ascending and has_double functions"""
+"""for item in puzzle_input:# only returns items where all 6 digits are the same (222222,333333,444444,555555,666666)
+   if is_ascending(item) == True:
+       print(item)"""
+"""for item in puzzle_input: # not workign. is returning items with no doubles(fixed needed to skip index 0 check password)
+    if has_double(item) == True:
+        print(item)"""
+
+
+def hacker(item):
+    item = str(item)
+    check_password =[]
+    count = 0
+    # pointlessley needed to change each object to string then iterate over it and turn it back into an int individually.
+    # i am sure there is a better method for this
+    for i in item:
+        x =int(i)
+        check_password.append(x)
+    #print(check_password)
+    good_sequence = is_ascending(item)
+    has_duplicate =has_double(item)
+    return good_sequence and has_duplicate
+
+count = 0
+potential =[]
+for attempt in puzzle_input:
+    if hacker(attempt) == True:
+        count += 1
+        potential.append(attempt)
+
+
+print(potential)
+print(count)
+
+
